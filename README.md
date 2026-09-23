@@ -6,7 +6,8 @@ Protótipo didático (ADS — Realidade Aumentada + Computação em Nuvem).
 > **Aviso:** temperatura, vibração, status e demais dados de monitoramento são **simulados e didáticos**.
 > Não representam limites reais de segurança ou de manutenção de nenhuma máquina.
 
-- **URL da aplicação WebAR:** `https://SEU-USUARIO.github.io/industria-ra-cloud/`
+- **URL da aplicação WebAR:** https://lucaspatracao.github.io/industria-ra-cloud/frontend/
+- **Repositório:** https://github.com/lucaspatracao/industria-ra-cloud
 - **Equipe:** _nomes dos integrantes_
 
 ## 1. Arquitetura
@@ -40,7 +41,6 @@ O navegador **não** fala MQTT: ele consulta a API por HTTP/JSON.
 industria-ra-cloud/
 ├── README.md
 ├── compose.yaml
-├── .github/workflows/pages.yml     # deploy do frontend no GitHub Pages
 ├── frontend/                       # WebAR (index.html, css, js, assets)
 ├── backend/                        # API Flask (app.py, requirements.txt, Dockerfile)
 ├── mqtt/mosquitto.conf             # configuração do broker
@@ -132,22 +132,42 @@ cloudflared tunnel --url http://localhost:5000
 O comando imprime uma URL `https://algo.trycloudflare.com`. Abra no celular:
 
 ```
-https://SEU-USUARIO.github.io/industria-ra-cloud/?api=https://algo.trycloudflare.com
+https://lucaspatracao.github.io/industria-ra-cloud/frontend/?api=https://algo.trycloudflare.com
 ```
+
+Antes de abrir a WebAR, teste o túnel no celular: `https://algo.trycloudflare.com/api/health` deve mostrar um JSON.
+
+**Por que é necessário?** Na página publicada, `API_BASE_URL` padrão (`http://localhost:5000`) não funciona:
+no celular, `localhost` é o próprio celular; e uma página HTTPS pública não deve (e o navegador pode bloquear) acessar um serviço HTTP local.
+Quando isso acontece, o painel do ponto 5 mostra a mensagem de indisponibilidade e uma linha com a causa provável.
 
 O parâmetro `?api=` sobrescreve o `API_BASE_URL` sem precisar editar e publicar de novo.
 (Alternativa: `ngrok http 5000`.) A URL do túnel muda a cada execução.
 
 ### 4.3 Publicação (GitHub Pages)
 
-1. Suba o repositório para o GitHub.
-2. **Settings → Pages → Source: GitHub Actions**.
-3. A cada `push` em `frontend/`, o workflow publica a pasta `frontend`.
+1. Suba o repositório para o GitHub (branch `main`).
+2. **Settings → Pages → Build and deployment → Source: Deploy from a branch → `main` / `(root)`**.
+3. O site fica em `https://lucaspatracao.github.io/industria-ra-cloud/frontend/` (a pasta `frontend` faz parte do endereço).
+4. Cada `push` republica automaticamente em ~1 a 2 minutos.
 
 ## 5. Calibração dos hotspots
 
-`data-x`, `data-y`, `data-z` em `frontend/index.html` são relativos ao target (largura = 1).
-X: esquerda (−) / direita (+). Y: baixo (−) / cima (+). Ajuste em passos de 0.02–0.05 e teste no celular.
+`data-x`, `data-y`, `data-z` em `frontend/index.html` são relativos ao target.
+A imagem-alvo é quadrada (1000×1000 px), então X e Y vão de −0.5 a +0.5.
+X: esquerda (−) / direita (+). Y: baixo (−) / cima (+).
+
+Conversão de pixel da imagem para coordenada: `x = px/1000 − 0.5` e `y = 0.5 − py/1000`.
+
+| Ponto | Região | Pixel aprox. | data-x | data-y |
+|---|---|---|---|---|
+| 1 | Cabeçote e placa | (200, 440) | −0.30 | 0.06 |
+| 2 | Torre / área de usinagem | (350, 370) | −0.15 | 0.13 |
+| 3 | Painel de comando CNC | (540, 300) | 0.04 | 0.20 |
+| 4 | Proteção lateral | (790, 420) | 0.29 | 0.08 |
+| 5 | Monitoramento (torre sinalizadora) | (610, 95) | 0.11 | 0.40 |
+
+Ajuste em passos de 0.02–0.05 depois de testar no celular.
 
 ## 6. Documentação
 
