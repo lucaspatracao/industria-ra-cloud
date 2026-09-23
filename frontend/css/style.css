@@ -203,6 +203,15 @@ a-scene {
   font-size: 14px;
 }
 
+.info-panel .panel-error small {
+  display: block;
+  margin-top: 8px;
+  color: #ffd0cc;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
 .refresh-button {
   margin-top: 12px;
   padding: 10px 16px;
