@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tmVib = document.querySelector("#tm-vib");
   const tmAtual = document.querySelector("#tm-atual");
   const panelError = document.querySelector("#panel-error");
+  const panelErrorDetail = document.querySelector("#panel-error-detail");
   const refreshButton = document.querySelector("#refresh-button");
 
   const hotspots = Array.from(document.querySelectorAll(".hotspot"));
@@ -148,6 +149,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  /* Explica a causa provável da falha (ajuda a depurar em sala/laboratório).
+     A mensagem principal para o usuário continua a mesma. */
+  function explainApiFailure(error) {
+    const host = window.location.hostname;
+    const pageIsLocal = host === "localhost" || host === "127.0.0.1";
+    const pageIsHttps = window.location.protocol === "https:";
+    const apiIsLocal = /^https?:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/i.test(API_BASE);
+    const apiIsHttp = /^http:\/\//i.test(API_BASE);
+
+    if (!pageIsLocal && apiIsLocal) {
+      return "A API está configurada como localhost, que só vale no computador da API " +
+        "(no celular, localhost é o próprio celular). Abra esta página com " +
+        "?api=https://SEU-TUNEL para usar a API por um túnel HTTPS.";
+    }
+
+    if (pageIsHttps && apiIsHttp) {
+      return "Esta página é HTTPS e a API é HTTP: o navegador bloqueia a chamada " +
+        "(mixed content). Use a URL HTTPS do túnel em ?api=.";
+    }
+
+    if (error && error.name === "AbortError") {
+      return `Tempo esgotado ao consultar ${API_BASE}.`;
+    }
+
+    return `Falha ao consultar ${API_BASE} (${error && error.message ? error.message : "erro de rede"}).`;
+  }
+
   function formatValue(value, unit) {
     if (value === null || value === undefined || Number.isNaN(Number(value))) {
       return "—";
@@ -195,6 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       /* Não mostra dados antigos como se fossem atuais. */
       telemetryBox.classList.add("hidden");
+      panelErrorDetail.textContent = explainApiFailure(error);
       panelError.classList.remove("hidden");
     } finally {
       if (requestId === requestCounter) {
