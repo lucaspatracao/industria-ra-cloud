@@ -154,18 +154,18 @@ O parâmetro `?api=` sobrescreve o `API_BASE_URL` sem precisar editar e publicar
 ## 5. Calibração dos hotspots
 
 `data-x`, `data-y`, `data-z` em `frontend/index.html` são relativos ao target.
-A imagem-alvo é quadrada (1000×1000 px), então X e Y vão de −0.5 a +0.5.
+A imagem-alvo tem 1536×1024 px. No MindAR a **largura vale 1**, então X vai de −0.5 a +0.5 e Y vai de −0.333 a +0.333 (altura = 1024/1536 ≈ 0.667).
 X: esquerda (−) / direita (+). Y: baixo (−) / cima (+).
 
-Conversão de pixel da imagem para coordenada: `x = px/1000 − 0.5` e `y = 0.5 − py/1000`.
+Conversão de pixel da imagem para coordenada: `x = px/1536 − 0.5` e `y = (512 − py)/1536`.
 
 | Ponto | Região | Pixel aprox. | data-x | data-y |
 |---|---|---|---|---|
-| 1 | Cabeçote e placa | (200, 440) | −0.30 | 0.06 |
-| 2 | Torre / área de usinagem | (350, 370) | −0.15 | 0.13 |
-| 3 | Painel de comando CNC | (540, 300) | 0.04 | 0.20 |
-| 4 | Proteção lateral | (790, 420) | 0.29 | 0.08 |
-| 5 | Monitoramento (torre sinalizadora) | (610, 95) | 0.11 | 0.40 |
+| 1 | Cabeçote e placa (castanhas) | (585, 490) | −0.12 | 0.01 |
+| 2 | Torre de ferramentas | (860, 420) | 0.06 | 0.06 |
+| 3 | Painel de comando (teclado) | (1180, 500) | 0.27 | 0.01 |
+| 4 | Proteção (porta com visor) | (300, 450) | −0.31 | 0.04 |
+| 5 | Monitoramento (tela do CNC) | (1120, 235) | 0.23 | 0.18 |
 
 Ajuste em passos de 0.02–0.05 depois de testar no celular.
 
