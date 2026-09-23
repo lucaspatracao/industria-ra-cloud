@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>RA | Apoio à Manutenção - Torno CNC</title>
 
   <link rel="stylesheet" href="css/style.css">
 
   <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js">
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js">
   </script>
 </head>
 
@@ -32,38 +29,27 @@
        Pontos 1 a 4: conteúdo estático. Ponto 5: dados dinâmicos da API. -->
   <div id="hotspot-layer">
 
-    <button class="hotspot" type="button"
-      data-topic="placa"
-      data-x="-0.34" data-y="0.02" data-z="0.03"
+    <button class="hotspot" type="button" data-topic="placa" data-x="-0.30" data-y="0.06" data-z="0.03"
       aria-label="Cabeçote e placa">1</button>
 
-    <button class="hotspot" type="button"
-      data-topic="torre"
-      data-x="0.07" data-y="0.03" data-z="0.03"
+    <button class="hotspot" type="button" data-topic="torre" data-x="-0.15" data-y="0.13" data-z="0.03"
       aria-label="Torre de ferramentas">2</button>
 
-    <button class="hotspot" type="button"
-      data-topic="comando"
-      data-x="0.36" data-y="0.15" data-z="0.03"
+    <button class="hotspot" type="button" data-topic="comando" data-x="0.04" data-y="0.20" data-z="0.03"
       aria-label="Painel de comando CNC">3</button>
 
-    <button class="hotspot hotspot-danger" type="button"
-      data-topic="seguranca"
-      data-x="0.35" data-y="-0.16" data-z="0.03"
-      aria-label="Proteção e segurança">4</button>
+    <button class="hotspot hotspot-danger" type="button" data-topic="seguranca" data-x="0.29" data-y="0.08"
+      data-z="0.03" aria-label="Proteção e segurança">4</button>
 
-    <button class="hotspot hotspot-monitor" type="button"
-      data-topic="monitoramento"
-      data-x="-0.05" data-y="-0.20" data-z="0.03"
-      aria-label="Monitoramento (dados da API)">5</button>
+    <button class="hotspot hotspot-monitor" type="button" data-topic="monitoramento" data-x="0.11" data-y="0.40"
+      data-z="0.03" aria-label="Monitoramento (dados da API)">5</button>
 
   </div>
 
   <!-- 3. PAINEL DE INFORMAÇÕES -->
   <section id="info-panel" class="info-panel hidden" aria-live="polite">
 
-    <button id="close-panel" class="close-button" type="button"
-      aria-label="Fechar painel">×</button>
+    <button id="close-panel" class="close-button" type="button" aria-label="Fechar painel">×</button>
 
     <small>PONTO DO TORNO</small>
     <h2 id="info-title">Componente</h2>
@@ -82,6 +68,7 @@
     <p id="panel-error" class="panel-error hidden" role="alert">
       ⚠ Não foi possível consultar os dados do equipamento.
       Verifique a disponibilidade do serviço e tente novamente.
+      <small id="panel-error-detail"></small>
     </p>
 
     <button id="refresh-button" class="refresh-button hidden" type="button">
@@ -90,24 +77,17 @@
   </section>
 
   <!-- 4. CENA DE RA -->
-  <a-scene
-    id="ar-scene"
-    mindar-image="
+  <a-scene id="ar-scene" mindar-image="
       imageTargetSrc: assets/targets/torno-cnc.mind;
       autoStart: true;
       uiLoading: yes;
       uiScanning: yes;
       uiError: yes;
-    "
-    color-space="sRGB"
-    renderer="
+    " color-space="sRGB" renderer="
       colorManagement: true;
       physicallyCorrectLights: true;
       alpha: true;
-    "
-    vr-mode-ui="enabled: false"
-    device-orientation-permission-ui="enabled: false"
-    embedded>
+    " vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" embedded>
 
     <a-camera id="ar-camera" position="0 0 0" look-controls="enabled: false">
     </a-camera>
@@ -122,4 +102,5 @@
   <script src="js/app.js"></script>
 
 </body>
+
 </html>
