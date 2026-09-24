@@ -8,7 +8,15 @@ Protótipo didático (ADS — Realidade Aumentada + Computação em Nuvem).
 
 - **URL da aplicação WebAR:** https://lucaspatracao.github.io/industria-ra-cloud/frontend/
 - **Repositório:** https://github.com/lucaspatracao/industria-ra-cloud
-- **Equipe:** _nomes dos integrantes_
+- **Equipe:** Rafael Rubiá Oliveira Cardoso e Lucas Nunes Patracão
+
+### Imagem para apontar a câmera
+
+Imprima ou exiba esta imagem e direcione a câmera do celular para ela:
+
+![Alvo para apontar o robô industrial](frontend/assets/images/robo-industrial.png)
+
+> Use a imagem acima como target do MindAR para reconhecer o robô industrial no ambiente de realidade aumentada.
 
 ## Ativo: robô industrial Mitsubishi Electric
 
