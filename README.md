@@ -20,7 +20,7 @@ Imprima ou exiba esta imagem e direcione a câmera do celular para ela:
 
 ## Ativo: robô industrial Mitsubishi Electric
 
-- Série MELFA FR, exemplo RV-2FR, MODELO A CONFIRMAR NA ETIQUETA do robô.
+- Série MELFA FR, RV-2FR.
 - Braço articulado vertical de 6 eixos, carga máxima de 2 kg, alcance de 504 mm, IP40.
 - Curso das juntas: J1 ±240°, J2 ±120°, J3 0° a +161°, J4 ±200°, J5 ±120°, J6 0° a ±360°.
 - Controlador CR800-D (autônomo); versões R e Q integram-se a CLPs MELSEC.
