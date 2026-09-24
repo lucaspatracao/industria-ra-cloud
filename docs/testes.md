@@ -9,7 +9,7 @@ Preencha **Resultado obtido**, **Status** (OK / FALHOU) e **Evidência** (print,
 | T03 | Movimentar celular/target | Hotspots acompanham o ativo | Mover lentamente o celular | | | |
 | T04 | Tocar hotspot técnico (1–4) | Informação estática apresentada | Tocar em cada número | | | |
 | T05 | Tocar Monitoramento (5) | API consultada e JSON apresentado | Tocar no ponto 5; conferir status, temperatura, vibração e horário | | | |
-| T06 | Publicar novo valor MQTT | Serviço recebe/atualiza o dado | `docker compose stop simulator` e `docker compose exec mqtt mosquitto_pub -t industria/CNC-01/temperatura -m 99.9 -r` | | | |
+| T06 | Publicar novo valor MQTT | Serviço recebe/atualiza o dado | `docker compose stop simulator` e `docker compose exec mqtt mosquitto_pub -t industria/ROBO-01/temperatura -m 99.9 -r` | | | |
 | T07 | Consultar novamente | Novo valor é apresentado na RA | Tocar em **Atualizar** no painel; deve exibir 99.9 °C | | | |
 | T08 | Parar a API | Mensagem de indisponibilidade | `docker compose stop api` e tocar em **Atualizar** | | | |
 | T09 | Restaurar a API | Consulta volta a funcionar | `docker compose start api` e tocar em **Atualizar** | | | |

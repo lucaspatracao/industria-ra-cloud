@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     apiParam && /^https?:\/\//i.test(apiParam) ? apiParam : CONFIG.API_BASE_URL;
 
   const API_BASE = String(apiEscolhida || "").replace(/\/+$/, "");
-  const EQUIPAMENTO_ID = CONFIG.EQUIPAMENTO_ID || "CNC-01";
+  const EQUIPAMENTO_ID = CONFIG.EQUIPAMENTO_ID || "ROBO-01";
   const REQUEST_TIMEOUT_MS = 5000;
 
   /* =========================================================
@@ -57,28 +57,28 @@ document.addEventListener("DOMContentLoaded", () => {
      dynamic: true => além do texto, consulta a API.
      ========================================================= */
   const information = {
-    placa: {
-      title: "Cabeçote e placa",
-      text: "A placa fixa a peça e o cabeçote fornece o movimento de rotação necessário ao torneamento.",
-      detail: "A fixação correta é essencial para precisão e segurança."
+    base: {
+      title: "Base",
+      text: "A base fixa o robô à bancada e sustenta o eixo J1, que gira o conjunto;",
+      detail: "fixação firme evita vibração e perda de precisão."
     },
-    torre: {
-      title: "Torre de ferramentas",
-      text: "A torre organiza as ferramentas de corte e permite selecionar a ferramenta necessária em cada etapa do programa CNC.",
-      detail: "A indexação da torre pode integrar a sequência automática de usinagem."
+    braco: {
+      title: "Braço (J2 e J3)",
+      text: "os eixos J2 e J3 posicionam o punho no espaço, definindo alcance e altura de trabalho;",
+      detail: "a movimentação combinada dos eixos define a região alcançável."
     },
-    comando: {
-      title: "Painel de comando CNC",
-      text: "O painel é a interface entre operador, programa CNC e sistema de controle da máquina.",
-      detail: "Os dados apresentados nesta experiência são didáticos."
+    punho: {
+      title: "Punho (J4, J5 e J6)",
+      text: "os três últimos eixos orientam a ferramenta, permitindo aproximar a peça em diferentes ângulos;",
+      detail: "servem para dar à garra a orientação necessária."
     },
-    seguranca: {
-      title: "Proteção e segurança",
-      text: "Portas, proteções e intertravamentos ajudam a separar o operador da região de usinagem.",
-      detail: "A Realidade Aumentada não substitui treinamento ou documentação do fabricante."
+    garra: {
+      title: "Efetuador final (ventosa)",
+      text: "é a ferramenta que interage com a peça; neste conjunto, uma ventosa pneumática que segura peças por vácuo;",
+      detail: "a carga suportada considera o peso da ferramenta e o da peça."
     },
     monitoramento: {
-      title: "Monitoramento",
+      title: "Monitoramento do robô",
       text: "Dados operacionais obtidos em tempo real da API Flask, alimentada por telemetria MQTT.",
       detail: "Valores SIMULADOS, apenas didáticos. Não representam limites reais de segurança ou manutenção.",
       dynamic: true
@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
      7. EVENTOS DO MINDAR
      ========================================================= */
   scene.addEventListener("arReady", () => {
-    status.textContent = "Câmera pronta. Aponte para a imagem do torno.";
+    status.textContent = "Câmera pronta. Aponte para a imagem do robô.";
     badge.textContent = "PROCURANDO ALVO";
   });
 
@@ -271,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
   target.addEventListener("targetFound", () => {
     tracking = true;
 
-    status.textContent = "Torno reconhecido. Toque em um ponto numerado.";
+    status.textContent = "Robô reconhecido. Toque em um ponto numerado.";
     badge.textContent = "● RA ATIVA";
 
     hotspots.forEach((button) => {

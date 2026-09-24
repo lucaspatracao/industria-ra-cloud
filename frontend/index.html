@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>RA | Apoio à Manutenção - Torno CNC</title>
+  <title>RA | Apoio à Manutenção - Robô Industrial Mitsubishi Electric</title>
 
   <link rel="stylesheet" href="css/style.css">
 
@@ -18,7 +18,7 @@
   <!-- 1. HUD -->
   <header id="hud">
     <div class="hud-text">
-      <strong>TORNO CNC • APOIO À MANUTENÇÃO</strong>
+      <strong>ROBO INDUSTRIAL MITSUBISHI ELECTRIC • APOIO À MANUTENÇÃO</strong>
       <span id="status">Inicializando a câmera...</span>
     </div>
     <span id="badge">INICIANDO</span>
@@ -29,20 +29,20 @@
        Pontos 1 a 4: conteúdo estático. Ponto 5: dados dinâmicos da API. -->
   <div id="hotspot-layer">
 
-    <button class="hotspot" type="button" data-topic="placa" data-x="-0.12" data-y="0.01" data-z="0.03"
-      aria-label="Cabeçote e placa">1</button>
+    <button class="hotspot" type="button" data-topic="base" data-x="-0.10" data-y="-0.11" data-z="0.03"
+      aria-label="Base">1</button>
 
-    <button class="hotspot" type="button" data-topic="torre" data-x="0.06" data-y="0.06" data-z="0.03"
-      aria-label="Torre de ferramentas">2</button>
+    <button class="hotspot" type="button" data-topic="braco" data-x="-0.09" data-y="0.30" data-z="0.03"
+      aria-label="Braço">2</button>
 
-    <button class="hotspot" type="button" data-topic="comando" data-x="0.27" data-y="0.01" data-z="0.03"
-      aria-label="Painel de comando CNC">3</button>
+    <button class="hotspot" type="button" data-topic="punho" data-x="0.26" data-y="0.42" data-z="0.03"
+      aria-label="Punho">3</button>
 
-    <button class="hotspot hotspot-danger" type="button" data-topic="seguranca" data-x="-0.31" data-y="0.04"
-      data-z="0.03" aria-label="Proteção e segurança">4</button>
+    <button class="hotspot hotspot-danger" type="button" data-topic="garra" data-x="0.26" data-y="0.30" data-z="0.03"
+      aria-label="Efetuador final (garra)">4</button>
 
-    <button class="hotspot hotspot-monitor" type="button" data-topic="monitoramento" data-x="0.23" data-y="0.18"
-      data-z="0.03" aria-label="Monitoramento (dados da API)">5</button>
+    <button class="hotspot hotspot-monitor" type="button" data-topic="monitoramento" data-x="0.13" data-y="-0.04"
+      data-z="0.03" aria-label="Monitoramento do robô">5</button>
 
   </div>
 
@@ -51,7 +51,7 @@
 
     <button id="close-panel" class="close-button" type="button" aria-label="Fechar painel">×</button>
 
-    <small>PONTO DO TORNO</small>
+    <small>PONTO DO ROBÔ</small>
     <h2 id="info-title">Componente</h2>
     <p id="info-text">Descrição.</p>
     <p id="info-detail" class="detail">Detalhe.</p>
@@ -78,7 +78,7 @@
 
   <!-- 4. CENA DE RA -->
   <a-scene id="ar-scene" mindar-image="
-      imageTargetSrc: assets/targets/torno-cnc.mind;
+      imageTargetSrc: ./assets/targets/targets.mind;
       autoStart: true;
       uiLoading: yes;
       uiScanning: yes;

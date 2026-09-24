@@ -20,7 +20,7 @@ import paho.mqtt.client as mqtt
 MQTT_HOST = os.getenv("MQTT_HOST", "localhost")
 MQTT_PORT = int(os.getenv("MQTT_PORT", "1883"))
 TOPIC_ROOT = os.getenv("MQTT_TOPIC_ROOT", "industria")
-EQUIPAMENTO_ID = os.getenv("EQUIPAMENTO_ID", "CNC-01")
+EQUIPAMENTO_ID = os.getenv("EQUIPAMENTO_ID", "ROBO-01")
 INTERVALO_S = float(os.getenv("INTERVALO_S", "3"))
 
 executando = True

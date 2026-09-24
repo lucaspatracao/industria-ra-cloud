@@ -32,7 +32,7 @@ services:
       MQTT_HOST: mqtt
       MQTT_PORT: "1883"
       MQTT_TOPIC_ROOT: industria
-      EQUIPAMENTO_ID: CNC-01
+      EQUIPAMENTO_ID: ROBO-01
       INTERVALO_S: "3"
     depends_on:
       - mqtt

@@ -1,7 +1,7 @@
 # Sistema de Apoio à Manutenção Industrial com Realidade Aumentada e Serviços em Nuvem
 
 Protótipo didático (ADS — Realidade Aumentada + Computação em Nuvem).
-**Ativo:** Torno CNC (`CNC-01`, setor Usinagem).
+**Ativo:** robô industrial Mitsubishi Electric (`ROBO-01`, setor Manufatura).
 
 > **Aviso:** temperatura, vibração, status e demais dados de monitoramento são **simulados e didáticos**.
 > Não representam limites reais de segurança ou de manutenção de nenhuma máquina.
@@ -10,14 +10,25 @@ Protótipo didático (ADS — Realidade Aumentada + Computação em Nuvem).
 - **Repositório:** https://github.com/lucaspatracao/industria-ra-cloud
 - **Equipe:** _nomes dos integrantes_
 
+## Ativo: robô industrial Mitsubishi Electric
+
+- Série MELFA FR, exemplo RV-2FR, MODELO A CONFIRMAR NA ETIQUETA do robô.
+- Braço articulado vertical de 6 eixos, carga máxima de 2 kg, alcance de 504 mm, IP40.
+- Curso das juntas: J1 ±240°, J2 ±120°, J3 0° a +161°, J4 ±200°, J5 ±120°, J6 0° a ±360°.
+- Controlador CR800-D (autônomo); versões R e Q integram-se a CLPs MELSEC.
+- A carga máxima vale com a interface mecânica voltada para baixo (±10° da vertical).
+- Fonte: ficha técnica oficial da Mitsubishi Electric F.A. (MELFA). Estes valores são de catálogo, não parâmetros de segurança, e podem variar conforme o modelo.
+
+> O ponto 5 de monitoramento contém o botão de emergência e serve de gancho para a discussão de segurança; não invente procedimentos oficiais.
+
 ## 1. Arquitetura
 
 ```mermaid
 flowchart TD
-    A["Torno CNC + target visual"] -->|câmera| B["WebAR<br/>HTML + CSS + JS<br/>A-Frame + MindAR<br/>(GitHub Pages, HTTPS)"]
+    A["Robô industrial Mitsubishi Electric + target visual"] -->|câmera| B["WebAR<br/>HTML + CSS + JS<br/>A-Frame + MindAR<br/>(GitHub Pages, HTTPS)"]
     B -->|"HTTP / JSON (fetch)"| C["API Flask<br/>:5000"]
     D["Broker MQTT Mosquitto<br/>:1883"] -->|"assinatura (subscriber)"| C
-    E["Simulador de telemetria<br/>(publisher)"] -->|publica| D
+    E["Simulador de telemetria<br/>(publisher)" ] -->|publica| D
     subgraph Docker Compose
         C
         D
@@ -66,8 +77,8 @@ Verificação:
 
 ```bash
 curl http://localhost:5000/api/health
-curl http://localhost:5000/api/equipamentos/CNC-01
-curl http://localhost:5000/api/equipamentos/CNC-01/telemetria
+curl http://localhost:5000/api/equipamentos/ROBO-01
+curl http://localhost:5000/api/equipamentos/ROBO-01/telemetria
 ```
 
 (No PowerShell, use `curl.exe` em vez de `curl`.)
@@ -85,9 +96,9 @@ Parar tudo: `docker compose down`.
 ### Tópicos MQTT
 
 ```
-industria/CNC-01/temperatura     (ex.: 47.2)
-industria/CNC-01/vibracao        (ex.: 2.3)
-industria/CNC-01/status          (ex.: operando)
+industria/ROBO-01/temperatura     (ex.: 47.2)
+industria/ROBO-01/vibracao        (ex.: 2.3)
+industria/ROBO-01/status          (ex.: operando)
 ```
 
 O simulador publica com `retain=true`, então a API recebe o último valor assim que reconecta.
@@ -99,10 +110,10 @@ O simulador publica com `retain=true`, então a API recebe o último valor assim
 docker compose stop simulator
 
 # 2. publique um valor de teste
-docker compose exec mqtt mosquitto_pub -t industria/CNC-01/temperatura -m 99.9 -r
+docker compose exec mqtt mosquitto_pub -t industria/ROBO-01/temperatura -m 99.9 -r
 
 # 3. confira
-curl http://localhost:5000/api/equipamentos/CNC-01/telemetria
+curl http://localhost:5000/api/equipamentos/ROBO-01/telemetria
 
 # 4. volte o simulador
 docker compose start simulator
@@ -154,18 +165,16 @@ O parâmetro `?api=` sobrescreve o `API_BASE_URL` sem precisar editar e publicar
 ## 5. Calibração dos hotspots
 
 `data-x`, `data-y`, `data-z` em `frontend/index.html` são relativos ao target.
-A imagem-alvo tem 1536×1024 px. No MindAR a **largura vale 1**, então X vai de −0.5 a +0.5 e Y vai de −0.333 a +0.333 (altura = 1024/1536 ≈ 0.667).
-X: esquerda (−) / direita (+). Y: baixo (−) / cima (+).
+A imagem-alvo tem 1086×1448 px (retrato). Largura = 1 unidade, Y vai de −0.667 a +0.667.
+Fórmulas: `x = px/1086 − 0.5` e `y = (724 − py)/1086`.
 
-Conversão de pixel da imagem para coordenada: `x = px/1536 − 0.5` e `y = (512 − py)/1536`.
-
-| Ponto | Região | Pixel aprox. | data-x | data-y |
-|---|---|---|---|---|
-| 1 | Cabeçote e placa (castanhas) | (585, 490) | −0.12 | 0.01 |
-| 2 | Torre de ferramentas | (860, 420) | 0.06 | 0.06 |
-| 3 | Painel de comando (teclado) | (1180, 500) | 0.27 | 0.01 |
-| 4 | Proteção (porta com visor) | (300, 450) | −0.31 | 0.04 |
-| 5 | Monitoramento (tela do CNC) | (1120, 235) | 0.23 | 0.18 |
+| Ponto | Região | Pixel aprox. | data-x | data-y | data-z |
+|---|---|---|---|---|---|
+| 1 | Base | (−) | −0.10 | −0.11 | 0.03 |
+| 2 | Braço | (−) | −0.09 | 0.30 | 0.03 |
+| 3 | Punho | (−) | 0.26 | 0.42 | 0.03 |
+| 4 | Garra (ventosa) | (−) | 0.26 | 0.30 | 0.03 |
+| 5 | Monitoramento (pendente de ensino) | (−) | 0.13 | −0.04 | 0.03 |
 
 Ajuste em passos de 0.02–0.05 depois de testar no celular.
 

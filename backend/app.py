@@ -40,10 +40,10 @@ FUSO = ZoneInfo(os.getenv("TZ_NAME", "America/Sao_Paulo"))
 # Dados do protótipo
 # ---------------------------------------------------------------------------
 EQUIPAMENTOS = {
-    "CNC-01": {
-        "id": "CNC-01",
-        "tipo": "Torno CNC",
-        "setor": "Usinagem",
+    "ROBO-01": {
+        "id": "ROBO-01",
+        "tipo": "Robô Industrial",
+        "setor": "Manufatura",
         "status": "operacional",
     },
 }
